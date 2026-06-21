@@ -1,0 +1,97 @@
+<mujoco>
+
+    <!-- ===================================== -->
+    <!-- PHYSICS -->
+    <!-- ===================================== -->
+
+    <option gravity="0 0 -9.81"
+            timestep="0.01"/>
+
+    <!-- ===================================== -->
+    <!-- VISUAL -->
+    <!-- ===================================== -->
+
+    <visual>
+        <global offwidth="1280"
+                offheight="720"/>
+    </visual>
+
+    <!-- ===================================== -->
+    <!-- WORLD -->
+    <!-- ===================================== -->
+
+    <worldbody>
+
+        <!-- CAMERA -->
+        <camera
+            name="main"
+            pos="0 -15 4"
+            xyaxes="1 0 0 0 0 1"/>
+
+        <!-- GROUND -->
+        <geom
+            type="plane"
+            size="30 30 0.1"
+            rgba="0.8 0.8 0.8 1"/>
+
+        <!-- ================================= -->
+        <!-- MOVING PLATFORM -->
+        <!-- ================================= -->
+
+        <body name="platform"
+              pos="0 0 0.2">
+
+            <!-- ONLY TRANSLATION ALONG X -->
+            <joint
+                name="platform_slide"
+                type="slide"
+                axis="1 0 0"
+                damping="0.2"/>
+
+            <!-- PLATFORM GEOMETRY -->
+            <geom
+                type="box"
+                size="2.5 0.5 0.1"
+                rgba="0.2 0.2 0.8 1"/>
+
+            <!-- ============================= -->
+            <!-- SEGWAY / PENDULUM -->
+            <!-- ============================= -->
+
+            <body name="segway"
+                  pos="0 0 0.2">
+
+                <!-- ONLY PITCH ROTATION -->
+                <joint
+                    name="segway_pitch"
+                    type="hinge"
+                    axis="0 1 0"
+                    damping="0.001"/>
+
+                <!-- PENDULUM BODY -->
+                <geom
+                    type="capsule"
+                    fromto="0 0 0 0 0 2"
+                    size="0.1"
+                    rgba="0.8 0.2 0.2 1"/>
+
+            </body>
+
+        </body>
+
+    </worldbody>
+
+    <!-- ===================================== -->
+    <!-- ACTUATOR -->
+    <!-- ===================================== -->
+
+    <actuator>
+
+        <motor
+            name="segway_motor"
+            joint="segway_pitch"
+            gear="150"/>
+
+    </actuator>
+
+</mujoco>
